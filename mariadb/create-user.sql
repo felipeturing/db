@@ -66,3 +66,32 @@ CREATE USER 'turing5'@'%'
 CREATE USER 'turing6'@'localhost' WITH
     MAX_USER_CONNECTIONS 10 -- Number of simultaneous connections from the same account
     MAX_QUERIES_PER_HOUR 200;
+
+
+-- HOST NAME COMPONENT : uses some wildcards % and _
+CREATE USER 'turing10'@'247.150.130.0/255.255.255.0';
+-- ip_addr & netmask = base_ip (247.150.130.0 to 247.150.130.255.)
+
+
+-- Anonymous Accounts
+CREATE USER ''@'localhost';
+CREATE USER ''@'192.168.0.3';
+-- On some systems, the mysql.db table has some entries for the ''@'%' anonymous account by default. It's neccesary delete
+-- that account.
+/*
+CREATE USER ''@'%';
+ERROR 1396 (HY000): Operation CREATE USER failed for ''@'%'
+*/
+
+DELETE FROM mysql.db WHERE User='' AND Host='%';
+FLUSH PRIVILEGES; -- The FLUSH statement clears or reloads various internal caches used by MariaDB. To execute FLUSH ,
+-- you must have the RELOAD privilege.
+CREATE USER ''@'%';
+-- Query OK, 0 rows affected (0.01 sec)
+
+
+--Password Expiry and Account Locking
+-- User password expiry was introduced in MariaDB 10.4.3.
+-- My installed MariaDB server version is 10.3.31
+CREATE USER felipeturing@localhost IDENTIFIED BY '12345turing12345' PASSWORD EXPIRE INTERVAL 120 DAY;
+CREATE USER 'turing11'@'localhost' ACCOUNT LOCK;
