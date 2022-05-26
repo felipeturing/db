@@ -1,0 +1,18 @@
+#Imprime las configuraciones básicas de /etc/mysql/my.cnf
+$mysqldump --print-defaults 
+
+
+#Asegura MariaDB Server en 10 segundos (set root password, anounymous log in, remote root log in)
+$mysql_secure_installation
+$chmod 600 my-file & mysql --defaults-file=/path/to/my-file #Log in with scripts
+
+# Log in con credenciales configuradas en el paso anterior
+$mysql -u root -p
+# Log in por defecto con las credenciales del grupo [client] en /etc/mysql/my.cnf
+$mysql 
+
+# Para que ingrese con la contraseña configurada en pasos anteriores, el campo se llama plugin y está ubicado en la tabla mysql.user, cambiar el valor de auth_socket a mysql_native_password. 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password; 
+FLUSH PRIVILEGES; 
+
+
