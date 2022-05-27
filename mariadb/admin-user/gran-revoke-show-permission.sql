@@ -31,8 +31,6 @@ revoke all, grant option from 'felipeturing'@'locahost'; -- Remover todos los pr
 
 show grants for felipeturing@localhost; 
 
-
-
 /*
     Setting and changing passwords
     SET PASSWORD FOR <user> = PASSWORD('<password>');
